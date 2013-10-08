@@ -10,7 +10,6 @@ public class ImRaising extends JavaPlugin {
 
 	public void onEnable() {
 		log = getLogger();
-		log.info("ImRaising plugin initializing");
 
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
 			public void run() {
@@ -22,11 +21,11 @@ public class ImRaising extends JavaPlugin {
 			}
 		}, 100, 1000);
 
-		log.info("ImRaising plugin initialized");
+		log.info("Initialization Complete");
 	}
 
 	public void onDisable() {
-		System.out.println("MCM Disabling");
+		log.info("Shutdown Complete");
 	}
 
 	public static void main(String[] args) {
