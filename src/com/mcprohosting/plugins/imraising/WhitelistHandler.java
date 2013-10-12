@@ -27,7 +27,7 @@ public class WhitelistHandler {
 				}
 				
 				if (donationAmount >= 25) {
-				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "whitelist add " + playerName);
+					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "whitelist add " + playerName);
 					
 					whitelistPlayer(playerName);
 					
