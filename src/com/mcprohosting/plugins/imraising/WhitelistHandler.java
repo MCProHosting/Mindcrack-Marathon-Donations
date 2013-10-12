@@ -9,7 +9,7 @@ import org.json.JSONObject;
 
 public class WhitelistHandler {
 	//Very hacky, have not had time to revise since the original writing of this over a year ago.
-	
+
 	public static void whitelistFromJSON(JSONObject jsonObject) {
 		JSONArray donationJSON = jsonObject.getJSONArray("donation");
 
@@ -41,6 +41,7 @@ public class WhitelistHandler {
 	}
 	
 	public static void whitelistPlayer(String playername) {
+		System.out.println("Whitelisting " + playername);
 		OfflinePlayer player = Bukkit.getOfflinePlayer(playername);
 		
 		if (!Bukkit.getWhitelistedPlayers().contains(player)) {

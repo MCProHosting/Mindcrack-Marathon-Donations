@@ -1,38 +1,47 @@
 package com.mcprohosting.plugins.imraising;
 
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.IOException;
-import java.util.logging.Logger;
-
 public class ImRaising extends JavaPlugin {
-	private Logger log;
+	private static Plugin plugin;
+
+	public static String pathToJSON;
+	public static int refreshRate;
+	public static int buffer;
 
 	public void onEnable() {
-		log = getLogger();
+		loadConfiguration();
 
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
 			public void run() {
-				try {
-					WhitelistHandler.whitelistFromJSON(JSONHandler.readJsonFromUrl("http://imraising.com/minecraftmarathon/json/livedata.jsonp"));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+			WhitelistHandler.whitelistFromJSON(JSONHandler.readJsonFromUrl(pathToJSON));
 			}
-		}, 100, 1000);
+		}, refreshRate*20, refreshRate*20);
 
-		log.info("Initialization Complete");
+		plugin = this;
+		getLogger().info("Initialization Complete");
 	}
 
 	public void onDisable() {
-		log.info("Shutdown Complete");
+		getLogger().info("Shutdown Complete");
 	}
 
-	public static void main(String[] args) {
-		try {
-			WhitelistHandler.whitelistFromJSON(JSONHandler.readJsonFromUrl("http://imraising.com/minecraftmarathon/json/livedata.jsonp"));
-		} catch (IOException e) {
-			e.printStackTrace();
+	private void loadConfiguration() {
+		this.saveDefaultConfig();
+
+		String jsonList = this.getConfig().getString("jsonlist");
+		if (JSONHandler.verifyURL(jsonList)) {
+			pathToJSON = jsonList;
+		} else {
+			throw new RuntimeException("JSON is not valid!");
 		}
+
+		refreshRate = this.getConfig().getInt("refreshtime");
+		buffer = this.getConfig().getInt("buffer");
+	}
+
+	public static Plugin getPlugin() {
+		return plugin;
 	}
 }
