@@ -5,46 +5,23 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class ImRaising extends JavaPlugin {
 	private static Plugin plugin;
-
-	protected static String pathToJSON;
-	protected static int refreshRate;
-	protected static int buffer;
-	protected static String cpEventID;
-	protected static String cpUsername;
-	protected static String cpPassword;
+	private static Configuration configuration;
 
 	public void onEnable() {
-		loadConfiguration();
+		plugin = this;
+		configuration = new Configuration();
 
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
 			public void run() {
-			WhitelistHandler.whitelistFromJSON(JSONHandler.readJsonFromUrl(pathToJSON));
+			WhitelistHandler.whitelistFromJSON(JSONHandler.readJsonFromUrl(configuration.getPathToJSON()));
 			}
-		}, refreshRate*20, refreshRate*20);
+		}, configuration.getRefreshRate()*20, configuration.getRefreshRate()*20);
 
-		plugin = this;
 		getLogger().info("Initialization Complete");
 	}
 
 	public void onDisable() {
 		getLogger().info("Shutdown Complete");
-	}
-
-	private void loadConfiguration() {
-		this.saveDefaultConfig();
-
-		String jsonList = this.getConfig().getString("jsonlist");
-		if (JSONHandler.verifyURL(jsonList)) {
-			pathToJSON = jsonList;
-		} else {
-			getLogger().warning("You ust enter a valid Child's Play JSON URL!");
-		}
-
-		refreshRate = this.getConfig().getInt("refreshtime");
-		buffer      = this.getConfig().getInt("buffer");
-		cpUsername  = this.getConfig().getString("username");
-		cpPassword  = this.getConfig().getString("password");
-		cpEventID   = this.getConfig().getString("event_id");
 	}
 
 	public static Plugin getPlugin() {
