@@ -7,3 +7,8 @@ refreshtime: 5
 #Parameter to set results to return from JSON for processing. Setting this lower will improve performance but at the risk of missing donations.
 #If the donations per second is greater than the buffer/refreshtime donations will be missed.
 buffersize: 25
+
+#Child's Play API Details
+event_id: none
+username: none
+password: none

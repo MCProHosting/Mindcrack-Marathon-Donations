@@ -3,7 +3,6 @@ package com.mcprohosting.plugins.imraising;
 import org.json.JSONObject;
 
 import java.io.*;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 
@@ -37,9 +36,9 @@ public class JSONHandler {
 
 	public static boolean verifyURL(String url) {
 		try {
-			new URL(url);
+			readJsonFromUrl(url);
 			return true;
-		} catch (MalformedURLException e) {
+		} catch (Exception e) {
 			return false;
 		}
 	}

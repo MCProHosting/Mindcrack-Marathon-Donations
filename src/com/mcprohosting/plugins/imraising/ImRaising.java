@@ -6,9 +6,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class ImRaising extends JavaPlugin {
 	private static Plugin plugin;
 
-	public static String pathToJSON;
-	public static int refreshRate;
-	public static int buffer;
+	protected static String pathToJSON;
+	protected static int refreshRate;
+	protected static int buffer;
+	protected static String cpEventID;
+	protected static String cpUsername;
+	protected static String cpPassword;
 
 	public void onEnable() {
 		loadConfiguration();
@@ -34,11 +37,14 @@ public class ImRaising extends JavaPlugin {
 		if (JSONHandler.verifyURL(jsonList)) {
 			pathToJSON = jsonList;
 		} else {
-			throw new RuntimeException("JSON is not valid!");
+			getLogger().warning("You ust enter a valid Child's Play JSON URL!");
 		}
 
 		refreshRate = this.getConfig().getInt("refreshtime");
-		buffer = this.getConfig().getInt("buffer");
+		buffer      = this.getConfig().getInt("buffer");
+		cpUsername  = this.getConfig().getString("username");
+		cpPassword  = this.getConfig().getString("password");
+		cpEventID   = this.getConfig().getString("event_id");
 	}
 
 	public static Plugin getPlugin() {
