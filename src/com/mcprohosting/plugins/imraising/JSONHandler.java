@@ -8,7 +8,9 @@ import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.Charset;
 
-import org.json.JSONObject;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class JSONHandler {
 	public static JSONObject readJsonFromUrl(String url) {
@@ -22,10 +24,12 @@ public class JSONHandler {
 			int indexOfJsonStart = originalText.indexOf('(');
 			String parsedText = originalText.substring(indexOfJsonStart+1, originalText.length()-1);
 			
-			JSONObject json = new JSONObject(parsedText);
+			JSONObject json = (JSONObject) new JSONParser().parse(parsedText);
 			return json;
 		} catch (IOException e) {
-			ImRaising.getPlugin().getLogger().severe("Failed to get/process data from " + url + ", error: " + e.getMessage());
+			ImRaising.getPlugin().getLogger().severe("Failed to get data from " + url + ", error: " + e.getMessage());
+		} catch (ParseException e) {
+			ImRaising.getPlugin().getLogger().severe("Failed to process data from " + url + ", error: " + e.getMessage());
 		} finally {
 			try {
 				inputStream.close();

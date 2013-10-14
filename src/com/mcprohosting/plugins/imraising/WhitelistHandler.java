@@ -3,32 +3,27 @@ package com.mcprohosting.plugins.imraising;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 
 public class WhitelistHandler {
-	//Very hacky, have not had time to revise since the original writing of this over a year ago.
 
 	public static void whitelistFromJSON(JSONObject jsonObject) {
-		JSONArray donationJSON = jsonObject.getJSONArray("donation");
-
-		for (int i = 0; i < donationJSON.length(); i++) {
-			String jsonObjectString = donationJSON.get(i).toString();
+		JSONArray donationJSON = (JSONArray) jsonObject.get("donation");
+		
+		for (Object o : donationJSON) {
+			JSONObject donation = (JSONObject) o;
 			
-			String playerName = jsonObjectString.substring(jsonObjectString.indexOf("custom")+9, jsonObjectString.length()-2);
-			double donationAmount = 0;
-			
-			String message = jsonObjectString.substring(jsonObjectString.indexOf("comment\":")+10, jsonObjectString.indexOf("custom")-3);
+			String playerName = (String) donation.get("custom");
 			
 			if (!Bukkit.getWhitelistedPlayers().contains(playerName)) {
-				try {
-					donationAmount = Double.parseDouble(jsonObjectString.substring(jsonObjectString.indexOf("amount:")+11, jsonObjectString.indexOf(",\"screen")));
-				} catch(Exception e) {
-					System.out.println("Invalid data for donation amount from array!");
-				}
+				double donationAmount = 0;
+				donationAmount = (Double) donation.get("amount");
 				
-				if (donationAmount >= 25) {
+				if (donationAmount >= 25d) {
+					String message = (String) donation.get("comment");
+					
 					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "whitelist add " + playerName);
 					
 					whitelistPlayer(playerName);
