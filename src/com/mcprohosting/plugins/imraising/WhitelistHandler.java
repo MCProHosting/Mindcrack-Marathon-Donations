@@ -15,32 +15,24 @@ public class WhitelistHandler {
 		for (Object o : donationJSON) {
 			JSONObject donation = (JSONObject) o;
 			
-			String playerName = (String) donation.get("custom");
+			String ign = (String) donation.get("custom");
+
+			OfflinePlayer player = Bukkit.getOfflinePlayer(ign);
 			
-			if (!Bukkit.getWhitelistedPlayers().contains(playerName)) {
-				double donationAmount = 0;
-				donationAmount = (Double) donation.get("amount");
+			if (!player.isWhitelisted()) {
+				Number donationAmount = 0;
+				donationAmount = (Number) donation.get("amount");
 				
-				if (donationAmount >= 25d) {
+				if (donationAmount.floatValue() >= 25f) {
+					String screenName = (String) donation.get("screen");
 					String message = (String) donation.get("comment");
 					
-					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "whitelist add " + playerName);
+					player.setWhitelisted(true);
 					
-					whitelistPlayer(playerName);
-					
-					Bukkit.broadcastMessage(ChatColor.GREEN + "Thank you to " + ChatColor.YELLOW + playerName + ChatColor.GREEN + " for donating " + ChatColor.YELLOW + "$" + donationAmount + ChatColor.GREEN + "!");
+					Bukkit.broadcastMessage(ChatColor.GREEN + "Thank you to " + ChatColor.YELLOW + screenName + ChatColor.GREEN + " for donating " + ChatColor.YELLOW + "$" + donationAmount + ChatColor.GREEN + "!");
 					Bukkit.broadcastMessage(ChatColor.GREEN + message);
 				}
 			}
-		}
-	}
-	
-	public static void whitelistPlayer(String playername) {
-		System.out.println("Whitelisting " + playername);
-		OfflinePlayer player = Bukkit.getOfflinePlayer(playername);
-		
-		if (!Bukkit.getWhitelistedPlayers().contains(player)) {
-			Bukkit.getWhitelistedPlayers().add(player);
 		}
 	}
 }
