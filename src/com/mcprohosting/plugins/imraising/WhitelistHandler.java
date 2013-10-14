@@ -3,49 +3,36 @@ package com.mcprohosting.plugins.imraising;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 
 public class WhitelistHandler {
-	//Very hacky, have not had time to revise since the original writing of this over a year ago.
 
 	public static void whitelistFromJSON(JSONObject jsonObject) {
-		JSONArray donationJSON = jsonObject.getJSONArray("donation");
+		JSONArray donationJSON = (JSONArray) jsonObject.get("donation");
+		
+		for (Object o : donationJSON) {
+			JSONObject donation = (JSONObject) o;
+			
+			String ign = (String) donation.get("custom");
 
-		for (int i = 0; i < donationJSON.length(); i++) {
-			String jsonObjectString = donationJSON.get(i).toString();
+			OfflinePlayer player = Bukkit.getOfflinePlayer(ign);
 			
-			String playerName = jsonObjectString.substring(jsonObjectString.indexOf("custom")+9, jsonObjectString.length()-2);
-			double donationAmount = 0;
-			
-			String message = jsonObjectString.substring(jsonObjectString.indexOf("comment\":")+10, jsonObjectString.indexOf("custom")-3);
-			
-			if (!Bukkit.getWhitelistedPlayers().contains(playerName)) {
-				try {
-					donationAmount = Double.parseDouble(jsonObjectString.substring(jsonObjectString.indexOf("amount:")+11, jsonObjectString.indexOf(",\"screen")));
-				} catch(Exception e) {
-					System.out.println("Invalid data for donation amount from array!");
-				}
+			if (!player.isWhitelisted()) {
+				Number donationAmount = 0;
+				donationAmount = (Number) donation.get("amount");
 				
-				if (donationAmount >= 25) {
-					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "whitelist add " + playerName);
+				if (donationAmount.floatValue() >= 25f) {
+					String screenName = (String) donation.get("screen");
+					String message = (String) donation.get("comment");
 					
-					whitelistPlayer(playerName);
+					player.setWhitelisted(true);
 					
-					Bukkit.broadcastMessage(ChatColor.GREEN + "Thank you to " + ChatColor.YELLOW + playerName + ChatColor.GREEN + " for donating " + ChatColor.YELLOW + "$" + donationAmount + ChatColor.GREEN + "!");
+					Bukkit.broadcastMessage(ChatColor.GREEN + "Thank you to " + ChatColor.YELLOW + screenName + ChatColor.GREEN + " for donating " + ChatColor.YELLOW + "$" + donationAmount + ChatColor.GREEN + "!");
 					Bukkit.broadcastMessage(ChatColor.GREEN + message);
 				}
 			}
-		}
-	}
-	
-	public static void whitelistPlayer(String playername) {
-		System.out.println("Whitelisting " + playername);
-		OfflinePlayer player = Bukkit.getOfflinePlayer(playername);
-		
-		if (!Bukkit.getWhitelistedPlayers().contains(player)) {
-			Bukkit.getWhitelistedPlayers().add(player);
 		}
 	}
 }
