@@ -10,5 +10,5 @@ buffersize: 25
 
 #Child's Play API Details
 event_id: none
-username: none
-password: none
+api_key: none
+api_secret: none

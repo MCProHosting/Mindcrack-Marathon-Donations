@@ -20,8 +20,8 @@ public class Configuration {
 
 		refreshRate = ImRaising.getPlugin().getConfig().getInt("refreshtime");
 		buffer = ImRaising.getPlugin().getConfig().getInt("buffer");
-		cpUsername = ImRaising.getPlugin().getConfig().getString("username");
-		cpPassword = ImRaising.getPlugin().getConfig().getString("password");
+		cpUsername = ImRaising.getPlugin().getConfig().getString("api_key");
+		cpPassword = ImRaising.getPlugin().getConfig().getString("api_secret");
 		cpEventID = ImRaising.getPlugin().getConfig().getString("event_id");
 	}
 
