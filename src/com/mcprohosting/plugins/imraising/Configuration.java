@@ -4,9 +4,9 @@ public class Configuration {
 	private String pathToJSON;
 	private int refreshRate;
 	private int buffer;
-	private String cpEventID;
-	private String cpUsername;
-	private String cpPassword;
+	private String api_key;
+	private String api_secret;
+	private String event_id;
 
 	public Configuration() {
 		ImRaising.getPlugin().saveDefaultConfig();
@@ -19,10 +19,10 @@ public class Configuration {
 		}
 
 		refreshRate = ImRaising.getPlugin().getConfig().getInt("refreshtime");
-		buffer = ImRaising.getPlugin().getConfig().getInt("buffer");
-		cpUsername = ImRaising.getPlugin().getConfig().getString("api_key");
-		cpPassword = ImRaising.getPlugin().getConfig().getString("api_secret");
-		cpEventID = ImRaising.getPlugin().getConfig().getString("event_id");
+		buffer      = ImRaising.getPlugin().getConfig().getInt("buffer");
+		api_key     = ImRaising.getPlugin().getConfig().getString("api_key");
+		api_secret  = ImRaising.getPlugin().getConfig().getString("api_secret");
+		event_id    = ImRaising.getPlugin().getConfig().getString("event_id");
 	}
 
 	public String getPathToJSON() {
@@ -37,15 +37,15 @@ public class Configuration {
 		return buffer;
 	}
 
-	public String getCpEventID() {
-		return cpEventID;
+	public String getApi_key() {
+		return api_key;
 	}
 
-	public String getCpUsername() {
-		return cpUsername;
+	public String getApi_secret() {
+		return api_secret;
 	}
 
-	public String getCpPassword() {
-		return cpPassword;
+	public String getEvent_id() {
+		return event_id;
 	}
 }

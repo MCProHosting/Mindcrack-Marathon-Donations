@@ -20,10 +20,10 @@ public class WhitelistHandler {
 			OfflinePlayer player = Bukkit.getOfflinePlayer(ign);
 			
 			if (!player.isWhitelisted()) {
-				Number donationAmount = 0;
+				Number donationAmount;
 				donationAmount = (Number) donation.get("amount");
 				
-				if (donationAmount.floatValue() >= 25f) {
+				if (donationAmount.floatValue() >= 20f) {
 					String screenName = (String) donation.get("screen");
 					String message = (String) donation.get("comment");
 					

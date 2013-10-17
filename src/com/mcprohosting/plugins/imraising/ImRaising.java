@@ -13,7 +13,7 @@ public class ImRaising extends JavaPlugin {
 
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
 			public void run() {
-			WhitelistHandler.whitelistFromJSON(JSONHandler.readJsonFromUrl(configuration.getPathToJSON()));
+			WhitelistHandler.whitelistFromJSON(JSONHandler.readJsonFromUrl(configuration.getPathToJSON() + "?api_key=" + configuration.getApi_key() +  "&api_secret=" + configuration.getApi_secret() + "&event_id=" + configuration.getEvent_id() + "&buffer=" + configuration.getBuffer()));
 			}
 		}, configuration.getRefreshRate()*20, configuration.getRefreshRate()*20);
 

@@ -8,6 +8,9 @@ refreshtime: 5
 #If the donations per second is greater than the buffer/refreshtime donations will be missed.
 buffersize: 25
 
+#Minimum donation requested to get whitelisted (integer)
+min_donation: 20
+
 #Child's Play API Details
 event_id: none
 api_key: none
