@@ -16,12 +16,7 @@ public class JSONHandler {
 			inputStream = new URL(url).openStream();
 
 			BufferedReader rd = new BufferedReader(new InputStreamReader(inputStream, Charset.forName("UTF-8")));
-			String originalText = readAll(rd);
-			System.out.println("Original text: " + originalText);
-			int indexOfJsonStart = originalText.indexOf('{');
-			System.out.println("Json index " + indexOfJsonStart);
-			String parsedText = originalText.substring(indexOfJsonStart+1, originalText.length()-1);
-			System.out.println("Parsed: " + parsedText);
+			String parsedText = readAll(rd);
 			
 			JSONObject json = (JSONObject) new JSONParser().parse(parsedText);
 			return json;
