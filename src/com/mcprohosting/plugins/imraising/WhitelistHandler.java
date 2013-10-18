@@ -14,7 +14,7 @@ public class WhitelistHandler {
 		for (Object o : donationJSON) {
 			JSONObject donation = (JSONObject) o;
 			
-			String ign = donation.get("comments").toString().toLowerCase().trim();
+			String ign = donation.get("comment").toString().toLowerCase().trim();
 
 			OfflinePlayer player = Bukkit.getOfflinePlayer(ign);
 			
