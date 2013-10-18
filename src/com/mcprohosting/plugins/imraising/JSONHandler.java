@@ -1,16 +1,12 @@
 package com.mcprohosting.plugins.imraising;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.URL;
-import java.nio.charset.Charset;
-
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+
+import java.io.*;
+import java.net.URL;
+import java.nio.charset.Charset;
 
 public class JSONHandler {
 	public static JSONObject readJsonFromUrl(String url) {
@@ -21,15 +17,20 @@ public class JSONHandler {
 
 			BufferedReader rd = new BufferedReader(new InputStreamReader(inputStream, Charset.forName("UTF-8")));
 			String originalText = readAll(rd);
+			System.out.println("Original text: " + originalText);
 			int indexOfJsonStart = originalText.indexOf('{');
+			System.out.println("Json index " + indexOfJsonStart);
 			String parsedText = originalText.substring(indexOfJsonStart+1, originalText.length()-1);
+			System.out.println("Parsed: " + parsedText);
 			
 			JSONObject json = (JSONObject) new JSONParser().parse(parsedText);
 			return json;
 		} catch (IOException e) {
-			ImRaising.getPlugin().getLogger().severe("Failed to get data from " + url + ", error: " + e.getMessage());
+			ImRaising.getPlugin().getLogger().severe("Failed to get data from " + url);
+			e.printStackTrace();
 		} catch (ParseException e) {
-			ImRaising.getPlugin().getLogger().severe("Failed to process data from " + url + ", error: " + e.getMessage());
+			ImRaising.getPlugin().getLogger().severe("Failed to process data from " + url);
+			e.printStackTrace();
 		} finally {
 			try {
 				inputStream.close();
