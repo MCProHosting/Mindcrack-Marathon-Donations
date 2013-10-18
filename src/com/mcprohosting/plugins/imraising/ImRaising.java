@@ -4,6 +4,8 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.json.simple.JSONObject;
 
+import java.io.*;
+
 public class ImRaising extends JavaPlugin {
 	private static Plugin plugin;
 	private static Configuration configuration;
@@ -34,5 +36,19 @@ public class ImRaising extends JavaPlugin {
 
 	public static Plugin getPlugin() {
 		return plugin;
+	}
+
+	public static void logToFile(JSONObject json) {
+		Writer writer = null;
+
+		try {
+			writer = new BufferedWriter(new OutputStreamWriter(
+					new FileOutputStream("json.log"), "utf-8"));
+			writer.write("Status: " + json.get("status").toString().toLowerCase() + " Comment: " + json.get("comment".toString().trim()));
+		} catch (IOException ex) {} finally {
+			try {
+				writer.close();
+			} catch (Exception e) {}
+		}
 	}
 }

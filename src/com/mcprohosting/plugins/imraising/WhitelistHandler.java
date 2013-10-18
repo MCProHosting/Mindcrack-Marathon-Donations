@@ -14,6 +14,7 @@ public class WhitelistHandler {
 
 		for (Object o : donationJSON) {
 			JSONObject donation = (JSONObject) o;
+			ImRaising.logToFile(donation);
 
 			String status = donation.get("status").toString().toLowerCase();
 			if (!status.equalsIgnoreCase("completed")) {
