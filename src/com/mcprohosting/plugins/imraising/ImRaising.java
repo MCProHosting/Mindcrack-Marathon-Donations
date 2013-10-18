@@ -14,7 +14,7 @@ public class ImRaising extends JavaPlugin {
 
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
 			public void run() {
-				JSONObject json = JSONHandler.readJsonFromUrl(configuration.getPathToJSON() + "?api_key=" + configuration.getApi_key() +  "&api_secret=" + configuration.getApi_secret() + "&event_id=" + configuration.getEvent_id() + "&buffer=" + configuration.getBuffer());
+			JSONObject json = JSONHandler.readJsonFromUrl(configuration.getPathToJSON() + "?api_key=" + configuration.getApi_key() +  "&api_secret=" + configuration.getApi_secret() + "&event_id=" + configuration.getEvent_id() + "&buffer=" + configuration.getBuffer());
 			WhitelistHandler.whitelistFromJSON(json);
 			}
 		}, configuration.getRefreshRate()*20, configuration.getRefreshRate()*20);

@@ -9,12 +9,7 @@ import org.json.simple.JSONObject;
 
 public class WhitelistHandler {
 	public static void whitelistFromJSON(JSONObject jsonObject) {
-		System.out.println("Whitelisting");
-		System.out.println(jsonObject.toString());
-		System.out.println(jsonObject.toJSONString());
-
 		JSONArray donationJSON = (JSONArray) jsonObject.get("donations");
-		System.out.println(donationJSON.toJSONString());
 
 		for (Object o : donationJSON) {
 			JSONObject donation = (JSONObject) o;
