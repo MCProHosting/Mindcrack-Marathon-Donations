@@ -2,6 +2,7 @@ package com.mcprohosting.plugins.imraising;
 
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.json.simple.JSONObject;
 
 public class ImRaising extends JavaPlugin {
 	private static Plugin plugin;
@@ -13,7 +14,8 @@ public class ImRaising extends JavaPlugin {
 
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
 			public void run() {
-			WhitelistHandler.whitelistFromJSON(JSONHandler.readJsonFromUrl(configuration.getPathToJSON() + "?api_key=" + configuration.getApi_key() +  "&api_secret=" + configuration.getApi_secret() + "&event_id=" + configuration.getEvent_id() + "&buffer=" + configuration.getBuffer()));
+				JSONObject json = JSONHandler.readJsonFromUrl(configuration.getPathToJSON() + "?api_key=" + configuration.getApi_key() +  "&api_secret=" + configuration.getApi_secret() + "&event_id=" + configuration.getEvent_id() + "&buffer=" + configuration.getBuffer());
+			WhitelistHandler.whitelistFromJSON(json);
 			}
 		}, configuration.getRefreshRate()*20, configuration.getRefreshRate()*20);
 
