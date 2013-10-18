@@ -9,21 +9,31 @@ import org.json.simple.JSONObject;
 
 public class WhitelistHandler {
 	public static void whitelistFromJSON(JSONObject jsonObject) {
+		System.out.println("Running white-list loop");
 		JSONArray donationJSON = (JSONArray) jsonObject.get("donations");
 
 		for (Object o : donationJSON) {
 			JSONObject donation = (JSONObject) o;
-			
+
+			String status = donation.get("status").toString().toLowerCase();
+			if (!status.equalsIgnoreCase("completed")) {
+				break;
+			}
+
 			String ign = donation.get("comment").toString().toLowerCase().trim();
+			if (ign.contains(" ")) {
+				break;
+			}
 
 			OfflinePlayer player = Bukkit.getOfflinePlayer(ign);
-			
+
 			if (!player.isWhitelisted()) {
 				Number donationAmount;
-				donationAmount =  Integer.parseInt(donation.get("amount").toString());
+				donationAmount = Double.parseDouble(donation.get("amount").toString());
 				
 				if (donationAmount.floatValue() >= 20f) {
 					player.setWhitelisted(true);
+					System.out.println("White-listed: " + player.getName());
 					
 					Bukkit.broadcastMessage(ChatColor.GREEN + "Thank you to " + ChatColor.YELLOW + ign + ChatColor.GREEN + " for donating " + ChatColor.YELLOW + "$" + donationAmount + ChatColor.GREEN + "!");
 				}
