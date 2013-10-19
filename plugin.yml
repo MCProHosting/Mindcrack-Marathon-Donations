@@ -1,18 +1,7 @@
-name: ImRaising
+name: Mindcrack-Marathon-Donations
 version: 0.1
-description: A Minecraft plugin that utilizes the ImRaising JSON API to parse donations.
+description: A Minecraft plugin that utilizes a JSON stream to parse donations.
 author: Matthew Salsamendi
 
-main: com.mcprohosting.plugins.imraising.ImRaising
+main: com.mcprohosting.plugins.donations.Donations
 database: false
-
-commands:
-   imraising:
-     description: Managment commands for ImRaising
-     permission: inferno.flagrate
-     usage: Syntax error! Type /imraising help for command reference.
-permissions:
-   imraising.*:
-     description: Gives access to all ImRaising commands
-     children:
-       imraising.parsenow: true

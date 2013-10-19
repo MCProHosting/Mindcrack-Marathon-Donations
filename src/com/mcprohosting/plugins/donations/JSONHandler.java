@@ -21,8 +21,7 @@ public class JSONHandler {
 			JSONObject json = (JSONObject) new JSONParser().parse(parsedText);
 			return json;
 		} catch (IOException e) {
-			Donations.getPlugin().getLogger().severe("Failed to get data from " + url);
-			e.printStackTrace();
+			Donations.getPlugin().getLogger().severe("Failed to get data from " + url + " server is likely down.");
 		} catch (ParseException e) {
 			Donations.getPlugin().getLogger().severe("Failed to process data from " + url);
 			e.printStackTrace();
