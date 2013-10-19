@@ -16,8 +16,6 @@ public class WhitelistHandler {
 			JSONObject donation = (JSONObject) o;
 			ImRaising.logToFile(donation);
 
-			String status = donation.get("status").toString().toLowerCase();
-
 			String ign = donation.get("comment").toString().toLowerCase().trim();
 			if (ign.contains(" ")) {
 				break;
