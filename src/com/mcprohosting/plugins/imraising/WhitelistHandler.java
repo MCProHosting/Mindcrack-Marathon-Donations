@@ -17,9 +17,6 @@ public class WhitelistHandler {
 			ImRaising.logToFile(donation);
 
 			String status = donation.get("status").toString().toLowerCase();
-			if (!status.equalsIgnoreCase("completed")) {
-				break;
-			}
 
 			String ign = donation.get("comment").toString().toLowerCase().trim();
 			if (ign.contains(" ")) {
