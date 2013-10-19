@@ -1,4 +1,4 @@
-package com.mcprohosting.plugins.imraising;
+package com.mcprohosting.plugins.donations;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -14,7 +14,6 @@ public class WhitelistHandler {
 
 		for (Object o : donationJSON) {
 			JSONObject donation = (JSONObject) o;
-			ImRaising.logToFile(donation);
 
 			String ign = donation.get("comment").toString().toLowerCase().trim();
 			if (ign.contains(" ")) {

@@ -1,4 +1,4 @@
-package com.mcprohosting.plugins.imraising;
+package com.mcprohosting.plugins.donations;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -21,16 +21,16 @@ public class JSONHandler {
 			JSONObject json = (JSONObject) new JSONParser().parse(parsedText);
 			return json;
 		} catch (IOException e) {
-			ImRaising.getPlugin().getLogger().severe("Failed to get data from " + url);
+			Donations.getPlugin().getLogger().severe("Failed to get data from " + url);
 			e.printStackTrace();
 		} catch (ParseException e) {
-			ImRaising.getPlugin().getLogger().severe("Failed to process data from " + url);
+			Donations.getPlugin().getLogger().severe("Failed to process data from " + url);
 			e.printStackTrace();
 		} finally {
 			try {
 				inputStream.close();
 			} catch (IOException e) {
-				ImRaising.getPlugin().getLogger().severe("Something has gone very wrong.");
+				Donations.getPlugin().getLogger().severe("Something has gone very wrong.");
 				e.printStackTrace();
 			}
 		}
